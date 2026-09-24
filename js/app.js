@@ -65,52 +65,11 @@ let aqiChartInstance = null;
           if (val) loadCity(val);
         }
 
-        function renderAqiChart(hourly) {
-          const times = (hourly.time || []).slice(0, 24).map(t => t.split('T')[1] || t);
-          const pm25Data = (hourly.pm2_5 || []).slice(0, 24);
-          const pm10Data = (hourly.pm10 || []).slice(0, 24);
-
-          const ctx = document.getElementById('chart-aqi').getContext('2d');
-          if (aqiChartInstance) aqiChartInstance.destroy();
-
-          aqiChartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: times,
-              datasets: [
-                {
-                  label: 'PM2.5',
-                  data: pm25Data,
-                  borderColor: '#fa520f',
-                  backgroundColor: 'rgba(250, 82, 15, 0.1)',
-                  fill: true,
-                  tension: 0.3,
-                  pointRadius: 2
-                },
-                {
-                  label: 'PM10',
-                  data: pm10Data,
-                  borderColor: '#ffd06a',
-                  backgroundColor: 'transparent',
-                  tension: 0.3,
-                  pointRadius: 2
-                }
-              ]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { position: 'top', labels: { font: { family: 'Inter', size: 11 } } }
-              },
-              scales: {
-                x: { grid: { display: false } },
-                y: { grid: { color: '#f0f2f5' } }
-              }
-            }
-          });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
+                document.addEventListener('DOMContentLoaded', () => {
           loadCity('Istanbul');
         });
+
+
+window.loadCity = loadCity;
+window.searchCity = searchCity;
+window.renderAqiChart = renderAqiChart;
